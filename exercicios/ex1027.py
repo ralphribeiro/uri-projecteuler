@@ -30,7 +30,7 @@ def encontra_pontos(txt: str) -> str:
                 plt.scatter(x[i], y[i], c='r')
 
 
-    plt.show()
+    # plt.show()
 
     return str(contador)
 
