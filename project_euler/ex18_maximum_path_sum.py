@@ -27,20 +27,24 @@ Find the maximum total from top to bottom of the triangle below:
 63 66 04 68 89 53 67 30 73 16 69 87 40 31
 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 
-NOTE: As there are only 16384 routes, it is possible to solve this problem by trying every route. However, Problem 67, is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
+NOTE: As there are only 16384 routes, it is possible to solve this problem by
+trying every route. However, Problem 67, is the same challenge with a triangle
+containing one-hundred rows; it cannot be solved by brute force, and requires
+a clever method! ;o)
 """
 
 import weakref
+from contextlib import suppress
 
 
 class Node:
     def __init__(self, value):
-        self._value = value
+        self.value = value
         self._parent = None
         self._children = []
 
     def __repr__(self):
-        return f'nó({self._value})'
+        return f'nó({self.value})'
 
     def __iter__(self):
         return iter(self._children)
@@ -61,7 +65,6 @@ class Node:
         yield self
         for c in self:
             yield from c.depth_first()
-
 
 
 def test_node():
@@ -89,42 +92,47 @@ def test_node():
 test_node()
 
 
-def calc_clindren(node, level):
-    c1 = node*(2-1) + level
-    c2 = node*(2-1) + level + 1
-    return node, (c1, c2)
+def calc_clindren_index(col, level):
+    if col == 0:
+        level = 0
+    else:
+        level -= 1
+
+    c1 = col*(2-1) + level
+    c2 = col*(2-1) + level + 1
+    return c1, c2
 
 
-def test_calc_clindren():
-    assert calc_clindren(1, 1) == (1, (2, 3))
-    assert calc_clindren(2, 2) == (2, (4, 5))
-    assert calc_clindren(3, 2) == (3, (5, 6))
-    assert calc_clindren(4, 3) == (4, (7, 8))
-    assert calc_clindren(5, 3) == (5, (8, 9))
-    assert calc_clindren(6, 3) == (6, (9, 10))
+# def test_calc_clindren_index():
+#     assert calc_clindren_index(1, 1) == (2, 3)
+#     assert calc_clindren_index(2, 2) == (4, 5)
+#     assert calc_clindren_index(3, 2) == (5, 6)
+#     assert calc_clindren_index(4, 3) == (7, 8)
+#     assert calc_clindren_index(5, 3) == (8, 9)
+#     assert calc_clindren_index(6, 3) == (9, 10)
 
 
-test_calc_clindren()
+# test_calc_clindren_index()
 
 
-nodes = list()
+def get_data():
+    with open('ex18_data.txt') as file:
+        return [line.strip().split(' ') for line in file]
 
 
-with open('ex18_data.txt') as file:
-    for level, line in enumerate(file, 1):
-        for node in line.strip().split(' '):
-            node = int(node)
-            n = Node(node)
-            for child in calc_clindren(node, level)[1]:
-                n.add_child(Node(child))
-            nodes.append(n)
+# def populate_tree(data):
+#     root = Node(data.pop(0)[0])
+#     for i_line, line in enumerate(data):
+#         for i_col, valor in enumerate(line):
+#             c1, c2 = calc_clindren_index(i_col, i_line)
+#             with suppress(IndexError):
+#                 c1 = data[i_line+1][c1]
+#                 c2 = data[i_line+1][c2]
 
 
-for node in nodes:
-    print(node, node.parent)
 
-# for i in  reversed(piramid):
-#     print(i)
+# def main():
+#     data = get_data()
+#     populate_tree(data)
 
-
-# print(calc_n(5, 3))
+# main()
