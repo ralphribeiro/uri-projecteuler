@@ -37,20 +37,25 @@ a clever method! ;o)
 def get_data():
     with open('ex18_data.txt') as file:
         array = []
-        lines = [line.strip().split(' ') for line in file]
+        lines = (line.strip().split(' ') for line in file)
         for line in lines:
             cols = [int(v) for v in line]
             array.append(cols)
         return array
 
 
-array = get_data()
+def main():
+    array = get_data()
 
-for i in range(len(array) - 1):
-    arr1, arr2 = array[-1], array[-2]
-    for j in range(len(arr2)):
-        arr2[j] += max(arr1[j], arr1[j+1])
-    array.pop(-1)
-    array[-1] = arr2
+    for i in range(len(array) - 1):
+        last_array = array[-1]
+        penult_array = array[-2]
+        for j in range(len(penult_array)):
+            penult_array[j] += max(last_array[j], last_array[j+1])
+        array.pop(-1)
+        array[-1] = penult_array
 
-print(array[0][0])
+    print(array[0][0])
+
+
+main()
