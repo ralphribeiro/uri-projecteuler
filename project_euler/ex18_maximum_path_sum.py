@@ -33,106 +33,24 @@ containing one-hundred rows; it cannot be solved by brute force, and requires
 a clever method! ;o)
 """
 
-import weakref
-from contextlib import suppress
-
-
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self._parent = None
-        self._children = []
-
-    def __repr__(self):
-        return f'nó({self.value})'
-
-    def __iter__(self):
-        return iter(self._children)
-
-    @property
-    def parent(self):
-        return self._parent if self._parent is None else self._parent()
-
-    @parent.setter
-    def parent(self, node):
-        self._parent = weakref.ref(node)
-
-    def add_child(self, child):
-        self._children.append(child)
-        child.parent = self
-
-    def depth_first(self):
-        yield self
-        for c in self:
-            yield from c.depth_first()
-
-
-def test_node():
-    root = Node(0)
-    c1 = Node(1)
-    c2 = Node(2)
-    root.add_child(c1)
-    root.add_child(c2)
-    c1.add_child(Node(3))
-    c1.add_child(Node(4))
-    c2.add_child(Node(5))
-
-    expected = (
-        'nó(0)',
-        'nó(1)',
-        'nó(3)',
-        'nó(4)',
-        'nó(2)',
-        'nó(5)'
-    )
-    for i, c in enumerate(root.depth_first()):
-        assert repr(c) == expected[i]
-
-
-test_node()
-
-
-def calc_clindren_index(col, level):
-    if col == 0:
-        level = 0
-    else:
-        level -= 1
-
-    c1 = col*(2-1) + level
-    c2 = col*(2-1) + level + 1
-    return c1, c2
-
-
-# def test_calc_clindren_index():
-#     assert calc_clindren_index(1, 1) == (2, 3)
-#     assert calc_clindren_index(2, 2) == (4, 5)
-#     assert calc_clindren_index(3, 2) == (5, 6)
-#     assert calc_clindren_index(4, 3) == (7, 8)
-#     assert calc_clindren_index(5, 3) == (8, 9)
-#     assert calc_clindren_index(6, 3) == (9, 10)
-
-
-# test_calc_clindren_index()
-
 
 def get_data():
     with open('ex18_data.txt') as file:
-        return [line.strip().split(' ') for line in file]
+        array = []
+        lines = [line.strip().split(' ') for line in file]
+        for line in lines:
+            cols = [int(v) for v in line]
+            array.append(cols)
+        return array
 
 
-# def populate_tree(data):
-#     root = Node(data.pop(0)[0])
-#     for i_line, line in enumerate(data):
-#         for i_col, valor in enumerate(line):
-#             c1, c2 = calc_clindren_index(i_col, i_line)
-#             with suppress(IndexError):
-#                 c1 = data[i_line+1][c1]
-#                 c2 = data[i_line+1][c2]
+array = get_data()
 
+for i in range(len(array) - 1):
+    arr1, arr2 = array[-1], array[-2]
+    for j in range(len(arr2)):
+        arr2[j] += max(arr1[j], arr1[j+1])
+    array.pop(-1)
+    array[-1] = arr2
 
-
-# def main():
-#     data = get_data()
-#     populate_tree(data)
-
-# main()
+print(array[0][0])
