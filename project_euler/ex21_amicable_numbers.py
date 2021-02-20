@@ -21,22 +21,9 @@ def get_sum_of_divs(number):
 
 def get_list_of_sums(number):
     list_ = []
-    for n in range(number):
+    for n in range(3, number + 1):
         r = get_sum_of_divs(n)
         if r > 1:
             list_.append(r)
     return list_
 
-
-def main(number):
-    values = get_list_of_sums(number)
-    c_values = Counter(values)
-    c_occurence = count(1)
-    for k, v in c_values.items():
-        if v > 1:
-            next(c_occurence)
-    return c_occurence
-
-
-res = main(10000)
-print(res)
