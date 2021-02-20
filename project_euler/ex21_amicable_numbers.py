@@ -11,13 +11,32 @@ and 110; therefore d(220) = 284. The proper divisors of 284 are 1, 2, 4, 71 and
 Evaluate the sum of all the amicable numbers under 10000.
 """
 
-# number = 220
-
-def get_divs(number):
-    return [d for d in range(1, number) if number % d == 0]
+from collections import Counter
+from itertools import count
 
 
-for n in range(1000):
-    
+def get_sum_of_divs(number):
+    return sum(d for d in range(1, number) if number % d == 0)
 
-print(divs)
+
+def get_list_of_sums(number):
+    list_ = []
+    for n in range(number):
+        r = get_sum_of_divs(n)
+        if r > 1:
+            list_.append(r)
+    return list_
+
+
+def main(number):
+    values = get_list_of_sums(number)
+    c_values = Counter(values)
+    c_occurence = count(1)
+    for k, v in c_values.items():
+        if v > 1:
+            next(c_occurence)
+    return c_occurence
+
+
+res = main(10000)
+print(res)
