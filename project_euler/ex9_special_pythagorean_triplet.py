@@ -44,4 +44,6 @@ def pythagorean_triplet(r):
 
 a, b, c = pythagorean_triplet(1000)
 
-print(a, b, c)
+res = a * b * c
+
+print(res)

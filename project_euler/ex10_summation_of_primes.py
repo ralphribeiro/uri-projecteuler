@@ -44,16 +44,14 @@ def gen_primes():
 def sum_primes_calc(n):
     primes = gen_primes()
     _sum = 0
-    for _ in range(n):
-        _sum += next(primes)
-    print(_sum)
+    while p := next(primes):
+        if p >= n:
+            break
+        _sum += p
     return _sum
 
 
-def main():
-    sum_primes_calc(4)
-    sum_primes_calc(2000000)
-
-
-if __name__ == "__main__":
-    main()
+r = sum_primes_calc(10)
+print(r)
+r = sum_primes_calc(2 * 10**6)
+print(r)
