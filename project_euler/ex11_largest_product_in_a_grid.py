@@ -83,7 +83,7 @@ p = 'ex11_data.txt'
 @lru_cache
 def parse_grid():
     with open(p) as f:
-        return np.matrix([x.rstrip().split() for x in f.readlines()], np.int)
+        return np.matrix([x.rstrip().split() for x in f.readlines()], int)
 
 
 def vert_calc(i, j, s, inv):
@@ -104,20 +104,19 @@ def main():
     j = 8
     size = 4
     params = (
-        (i, j, size, False),
-        (i+1, j, size, False),
-        (i-1, j, size, False),
-        (i, j+1, size, False),
-        (i, j-1, size, False),
-        (i, j, size, False),
-        (j, i, size, True)
+        (i, j, size, False), # current
+        (i-size, j-size, size, False), # up
+        (i+size, j+size, size, False), # down
+        (i, j+1, size, False), # right
+        (i, j-1, size, False), # left
+        (j, i, size, True), # diagonally
     )
 
     g_num = 0
     values = None
     for param in params:
         v = vert_calc(*param)
-        if v[1] > g_num:
+        if v[1] >= g_num:
             g_num = v[1]
             values = v[0]
 
