@@ -46,10 +46,10 @@ def dec(fmt, precision=3):
         @wraps(func)
         def inner(*args):
             t_init = perf_counter_ns()
-            func(*args)
+            ret = func(*args)
             t_final = perf_counter_ns() - t_init
             print(f'{t_final/ret_format[fmt]:.{precision}f}{fmt}')
-            return None
+            return ret
         return inner
     return delta_time
 

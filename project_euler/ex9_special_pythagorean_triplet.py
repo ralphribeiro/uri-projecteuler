@@ -11,15 +11,17 @@ Find the product abc.
 """
 
 from datetime import datetime
+from functools import wraps
 
 
 def time_delta(func):
+    wraps(func)
     def inner(*args):
         t_init = datetime.now()
-        func(*args)
+        ret = func(*args)
         t_final = datetime.now() - t_init
         print(f'{t_final.seconds}s | {t_final.microseconds}us')
-        return time_delta
+        return ret
     return inner
 
 
@@ -37,7 +39,9 @@ def pythagorean_triplet(r):
             c = (a**2 + b**2)**(1/2)
             if c % 1 == 0:
                 if (a+b+int(c)) == r:
-                    return print(a, b, int(c))
+                    return a, b, int(c)
 
 
-pythagorean_triplet(1000)
+a, b, c = pythagorean_triplet(1000)
+
+print(a, b, c)

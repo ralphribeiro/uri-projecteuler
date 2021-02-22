@@ -37,10 +37,10 @@ from operator import mul
 def time_delta(func):
     def inner(*args):
         t_init = datetime.now()
-        func(*args)
+        ret = func(*args)
         t_final = datetime.now() - t_init
         print(f'{t_final.seconds}s | {t_final.microseconds}us')
-        return time_delta
+        return ret
     return inner
 
 

@@ -9,16 +9,15 @@ Smallest multiple.
 """
 
 from datetime import datetime
-from itertools import count
 
 
 def time_delta(func):
     def inner(*args):
         t_init = datetime.now()
-        func(*args)
+        ret = func(*args)
         t_final = datetime.now() - t_init
         print(f'{t_final.seconds}s | {t_final.microseconds}us')
-        return time_delta
+        return ret
     return inner
 
 
@@ -32,12 +31,13 @@ def check_mul(divds: list, b: int):
 @time_delta
 def calc_min_multiple(ni, ne):
     dividers = list(range(ni, ne))
-    base_nums = count(ni)
+    base_nums = ni
 
     while True:
-        b = next(base_nums)
-        if check_mul(dividers, b):
-            return print(b)
+        if check_mul(dividers, base_nums):
+            return print(base_nums)
+        base_nums += 1
 
 
 calc_min_multiple(1, 10)
+calc_min_multiple(1, 20)
