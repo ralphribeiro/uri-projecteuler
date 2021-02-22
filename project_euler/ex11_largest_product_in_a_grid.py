@@ -123,4 +123,56 @@ def main():
     print(g_num, values)
 
 
-main()
+# main()
+
+
+with open(p) as f:
+    lines = [x.rstrip().split() for x in f.readlines()]
+
+mtrx = []
+
+for line in lines:
+    value = [int(el) for el in line]
+    mtrx.append(value)
+
+res = 1
+
+for i in range(0, 20):
+    for j in range(0, 17):
+        value = mtrx[i][j]
+        for e in range(1, 4):
+            value *= mtrx[i][j+e]
+        if value >= res:
+            res = value
+
+for j in range(0, 20):
+    for i in range(0, 17):
+        value = mtrx[i][j]
+        for e in range(1, 4):
+            value *= mtrx[i+e][j]
+        if value >= res:
+            res = value
+
+for i in range(0, 17):
+    for j in range(0, 17):
+        value = mtrx[i][j]
+        for e in range(1, 4):
+            value *= mtrx[i+e][j+e]
+        if value >= res:
+            res = value
+
+
+print(res)
+
+        
+
+
+
+
+
+
+
+
+
+
+
