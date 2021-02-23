@@ -43,7 +43,10 @@ def make_hun(number):
     d = make_dec(number % 100)
     if not h:
         return lt_twenty[0]
-    return f'{h} hundred and {d}'.rstrip()
+    ret_d = f'{h} hundred and {d}'.rstrip()
+    if not d:
+        ret_d = ret_d.replace('and', '')
+    return ret_d
 
 
 assert make_hun(342) == 'three hundred and forty two'
