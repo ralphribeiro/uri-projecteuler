@@ -21,10 +21,10 @@ What is the value of the first triangle number to have over five hundred divisor
 
 from collections import Counter
 
+
 def gen_primes():
     D = {}
     q = 2
-
     while True:
         if q not in D:
             yield q
@@ -34,10 +34,6 @@ def gen_primes():
                 D.setdefault(p + q, []).append(p)
             del D[q]
         q += 1
-
-
-def get_divisors_of(n: int):
-    return (x for x in range(1, n+1) if n % x == 0)
 
 
 def gen_triangular_nums():
@@ -52,16 +48,9 @@ def gen_triangular_nums():
         tn = n * (n + 1) // 2
 
 
-def get_len_divisors():
-    """
-    Get len of divisors of triangular numbers.
-    """
-
-    triangulars = gen_triangular_nums()
+def get_len_divisors(tn):
     primes = gen_primes()
     p = next(primes)
-    # tn = next(triangulars)
-    tn = 28
     divs = []
     while tn > 1:
         if tn % p == 0:
@@ -69,13 +58,21 @@ def get_len_divisors():
             divs.append(p)
         else:
             p = next(primes)
-            print(p)
-    
     len_ = 1
     for v in list(Counter(divs).items()):
         len_ *= v[1] + 1
+    return len_
 
-    print(len_)
+
+def main():
+    tn_gen = gen_triangular_nums()
+    tn = next(tn_gen)
+    while True:
+        len_ = get_len_divisors(tn)
+        if len_ > 500:
+            print(tn)
+            break
+        tn = next(tn_gen)
 
 
-print(get_len_divisors())
+main()
