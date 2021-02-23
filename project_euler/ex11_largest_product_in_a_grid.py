@@ -137,6 +137,7 @@ for line in lines:
 
 res = 1
 
+# line
 for i in range(0, 20):
     for j in range(0, 17):
         value = mtrx[i][j]
@@ -145,6 +146,7 @@ for i in range(0, 20):
         if value >= res:
             res = value
 
+# column
 for j in range(0, 20):
     for i in range(0, 17):
         value = mtrx[i][j]
@@ -153,6 +155,7 @@ for j in range(0, 20):
         if value >= res:
             res = value
 
+# diagonal
 for i in range(0, 17):
     for j in range(0, 17):
         value = mtrx[i][j]
