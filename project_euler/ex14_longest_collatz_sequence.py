@@ -38,7 +38,8 @@ def largest_collatz_sequence(*args):
         len_, list_ = collatz_sequence(n)
         if len_ > largest_len:
             largest_len, largest_seq = len_, list_
-    return largest_len, largest_seq
+    # return largest_len, largest_seq
+    return largest_seq[0]
 
 
 def main(workers: int, num_sequencies: int):
