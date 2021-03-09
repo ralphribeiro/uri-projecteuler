@@ -17,14 +17,13 @@ century unless it is divisible by 400.
 """
 
 from datetime import date, timedelta
-from itertools import count
 
-counter = count(1)
+count = 0
 
 for year in range(1901, 2001):
     for month in range(1, 12):
         dt = date(year, month, 1)
         if dt.weekday() == 6:
-            next(counter)
+            count += 1
 
-print(counter)
+print(count)

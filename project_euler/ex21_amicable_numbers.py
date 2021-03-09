@@ -27,3 +27,6 @@ def get_list_of_sums(number):
             list_.append(r)
     return list_
 
+r = get_list_of_sums(10000)
+
+print(sum(r))
