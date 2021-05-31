@@ -5,17 +5,20 @@ from itertools import takewhile
 
 
 def is_prime(n):
-    for i in range(2, n - 1):
+    if n == 2 or n == 3:
+        return True
+    if n % 2 == 0 or n < 2:
+        return False
+    for i in range(3, int(n**0.5)+1, 2):   # only odd numbers
         if n % i == 0:
             return False
-    else:
-        return True
+    return True
 
 def miller_rabin(n):
     if not n > 1:
         return False
     for all_ in range(2, min(n-2), int(2*(log(n))**2)):
-        x = 
+        x = ...
 
 
 if __name__ == "__main__":
