@@ -21,6 +21,16 @@ def time_delta(func):
     return inner
 
 
+def gcd(x: int, y: int) -> int:
+    """ Greatest Common Divisor. """
+    return x if y == 0 else gcd(y, x % y)
+
+
+def lcm(x: int, y: int) -> int:
+    """ Least Common Multiple. """
+    return (x * y) // gcd(x, y)
+
+
 def check_mul(divds: list, b: int):
     for d in divds:
         if b % d != 0:
@@ -30,14 +40,16 @@ def check_mul(divds: list, b: int):
 
 @time_delta
 def calc_min_multiple(ni, ne):
-    dividers = list(range(ni, ne))
-    base_nums = ni
-
-    while True:
-        if check_mul(dividers, base_nums):
-            return print(base_nums)
-        base_nums += 1
+    g = ni
+    for i in range(ni, ne + 1):
+        g = lcm(g, i)
+    return g
 
 
-calc_min_multiple(1, 10)
-calc_min_multiple(1, 20)
+def main():
+    print(calc_min_multiple(1, 10))
+    print(calc_min_multiple(1, 20))
+
+
+if __name__ == '__main__':
+    main()
