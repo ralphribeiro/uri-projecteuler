@@ -21,6 +21,18 @@ from concurrent import futures
 from collections import defaultdict
 from os import cpu_count
 from sys import argv
+from time import perf_counter_ns
+
+
+def timer(func):
+    def inner(*args):
+        inicio = perf_counter_ns()
+        r = func(*args)
+        fim = perf_counter_ns()
+        print(f'{func.__name__}(): {(fim-inicio)/10**6}ms')
+        return r
+    return inner
+
 
 def collatz_sequence(n: int):
     ret = [n]
@@ -41,7 +53,7 @@ def largest_collatz_sequence(*args):
     # return largest_len, largest_seq
     return largest_seq[0]
 
-
+@timer
 def main(workers: int, num_sequencies: int):
     with futures.ProcessPoolExecutor() as executor:
         future_map = defaultdict()
@@ -61,11 +73,11 @@ def main(workers: int, num_sequencies: int):
 
 
 if __name__ == "__main__":
-    
+
     if (len(argv)) == 2:
         workers = int(argv[1])
-    else:    
+    else:
         workers = cpu_count()
-    
-    r = main(workers, 10**6)
+
+    r = main(workers, 10**5)
     print(r)
