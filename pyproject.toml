@@ -1,20 +1,15 @@
 [tool.poetry]
 name = "uri-projecteuler"
 version = "0.1.0"
-description = "exercicios"
+description = ""
 authors = ["Ralph Ribeiro <ralph_ribeiro@msn.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
-numpy = "^1.20.1"
-ipython = "^7.23.1"
-pytest = "^6.2.4"
+python = "^3.10"
 
 [tool.poetry.dev-dependencies]
-pylama = "^7.7.1"
-radon = "^4.5.0"
-autopep8 = "^1.5.7"
-rope = "^0.19.0"
+autopep8 = "^1.7.0"
+mypy = "^0.971"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
