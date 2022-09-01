@@ -33,10 +33,8 @@ def calc_word(word: str) -> int:
     return sum(reference[l] for l in word)
 
 
-NS = [get_nth_term(n) for n in range(1, 21)]
-
-
 def main():
+    NS = [get_nth_term(n) for n in range(1, 21)]
     count = 0
     with open('words.txt', 'r') as file:
         for word in file.read().split(','):
